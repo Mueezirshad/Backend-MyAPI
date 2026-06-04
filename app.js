@@ -4,14 +4,11 @@ const cors = require("cors");
 const { config } = require('dotenv');
 require("dotenv").config(); 
 
-// 🟢 BILKUL NEW: Auth Routes ko import kiya jo aapne banaye hain
 const authRoutes = require("./routes/authRoutes"); 
 
 app.use(express.json());
 app.use(cors());
 
-// 🟢 BILKUL NEW: Routes ko main app ke saath link kiya bina kisi prefix ke
-// Taake direct http://localhost:5000/register chal sake
 app.use("/", authRoutes); 
 
 let port = 5000 || process.env.PORT ;
@@ -117,3 +114,5 @@ app.delete("/products/:id", (req, res) => {
 app.listen(port, () => {
     console.log("server is running in port " + port);
 });
+
+module.exports = app;
