@@ -10,7 +10,7 @@ if (process.env.NODE_ENV !== 'production' && !fs.existsSync(uploadDir)) {
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, uploadDir); // Temporary folder path yahan pass hoga
+        cb(null, uploadDir); 
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -29,7 +29,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ 
     storage: storage,
     fileFilter: fileFilter,
-    limits: { fileSize: 1024 * 1024 * 5 } // 5MB limit
+    limits: { fileSize: 1024 * 1024 * 5 } 
 });
 
 module.exports = upload;
