@@ -29,14 +29,15 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// 🔒 Password Hashing: Data save hone se pehle password ko encrypt karne ka logic
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-  
+  if (!this.isModified("password")) {
+    return next(); 
+  }
+
   try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
-    next();
+    next(); // parameters mein 'next' pass karne se yeh crash nahi hoga
   } catch (error) {
     next(error);
   }
