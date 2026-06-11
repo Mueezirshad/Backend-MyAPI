@@ -51,21 +51,16 @@ const productSchema = new mongoose.Schema(
 );
 
 
-productSchema.pre("save", async function (next) {
-  if (!this.isNew) return next();
+productSchema.pre("save", async function () {
+  if (!this.isNew) return;
 
-  try {
-    const counter = await Counter.findOneAndUpdate(
-      { name: "productId" },
-      { $inc: { seq: 1 } }, 
-      { new: true, upsert: true }
-    );
+  const counter = await Counter.findOneAndUpdate(
+    { name: "productId" },
+    { $inc: { seq: 1 } },
+    { new: true, upsert: true }
+  );
 
-    this.productId = counter.seq;
-    next();
-  } catch (error) {
-    next(error);
-  }
+  this.productId = counter.seq;
 });
 
 const Product = mongoose.model("Product", productSchema);
