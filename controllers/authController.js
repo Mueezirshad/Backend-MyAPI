@@ -2,7 +2,6 @@ const uploadToCloudinary = require("../upload/cloudinary")
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { uploadToCloudinary } = require("../config/cloudinary");
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET || "VanishMart_secret_key", {
