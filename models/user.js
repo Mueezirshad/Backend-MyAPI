@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: true, // Ek email se ek hi account banega
+      unique: true, 
       trim: true,
       lowercase: true,
     },
@@ -20,12 +20,12 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     profilePic: {
-      type: String, // Cloudinary ka image URL yahan save hoga
+      type: String, 
       default: "",
     },
   },
   {
-    timestamps: true, // Is se signup ki date aur time khud save ho jayega
+    timestamps: true,
   }
 );
 
@@ -37,7 +37,7 @@ userSchema.pre("save", async function (next) {
   try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
-    next(); // parameters mein 'next' pass karne se yeh crash nahi hoga
+    next(); 
   } catch (error) {
     next(error);
   }
