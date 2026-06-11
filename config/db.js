@@ -8,7 +8,7 @@ const connectDB = async () => {
     console.log(`MongoDB Connected: ${conn.connection.host} 🎉`);
   } catch (error) {
     console.error(`Database Connection Error: ${error.message}`);
-    process.exit(1); // Agar DB connect na ho to app ko band kar do
+     // Agar DB connect na ho to app ko band kar do
   }
 };
 
