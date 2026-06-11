@@ -1,3 +1,4 @@
+const uploadToCloudinary = require("../upload/cloudinary")
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -10,7 +11,7 @@ const generateToken = (id) => {
 };
 
 //REGISTER USER
-exports.registerUser = async (req, res) => {
+exports.registerUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
 
