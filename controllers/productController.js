@@ -1,5 +1,5 @@
 const Product = require("../models/product");
-const uploadToCloudinary = require("uploads/cloudinary")
+const uploadToCloudinary = require("config/cloudinary")
 const NodeCache = require("node-cache");
 const productCache = new NodeCache({ stdTTL: 300 });
 
