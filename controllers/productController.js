@@ -1,8 +1,7 @@
 const Product = require("../models/product");
-const { uploadToCloudinary } = require("../config/cloudinary");
-
+const uploadToCloudinary = require("uploads/cloudinary")
 const NodeCache = require("node-cache");
-const productCache = new NodeCache({ stdTTL: 300 }); 
+const productCache = new NodeCache({ stdTTL: 300 });
 
 exports.createProduct = async (req, res) => {
   try {
@@ -12,7 +11,7 @@ exports.createProduct = async (req, res) => {
       return res.status(400).json({ message: "Product image is required" });
     }
 
-    const imageUrl = await uploadToCloudinary(req.file.buffer, "olx_products");
+    const imageUrl = await uploadToCloudinary(req.file.buffer, "VanishMart_products");
 
     const newProduct = await Product.create({
       title,
