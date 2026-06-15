@@ -22,4 +22,4 @@ const uploadToCloudinary = (fileBuffer, folderName) => {
   });
 };
 
-module.exports = uploadToCloudinary;
+// module.exports = uploadToCloudinary;
