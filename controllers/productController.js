@@ -1,5 +1,5 @@
 const Product = require("../models/product");
-const uploadToCloudinary = require("config/cloudinary")
+const uploadToCloudinary = require("../config/cloudinary"); 
 const NodeCache = require("node-cache");
 const productCache = new NodeCache({ stdTTL: 300 });
 
@@ -31,6 +31,7 @@ exports.createProduct = async (req, res) => {
       product: newProduct,
     });
   } catch (error) {
+    console.error("Create Product Error:", error.message);
     res.status(500).json({ message: error.message });
   }
 };
@@ -49,6 +50,7 @@ exports.getAllProducts = async (req, res) => {
     }
 
     console.log("🍃 Fetching Products from MongoDB Database... (First Time Hit)");
+    // 🟢 Find query complete data nikalegi bina crash kiye
     const products = await Product.find().populate("userId", "name email");
 
     productCache.set(cacheKey, products);
@@ -59,6 +61,7 @@ exports.getAllProducts = async (req, res) => {
       products 
     });
   } catch (error) {
+    console.error("Get All Products Error:", error.message);
     res.status(500).json({ message: error.message });
   }
 };

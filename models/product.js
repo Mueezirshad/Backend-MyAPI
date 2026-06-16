@@ -50,17 +50,23 @@ const productSchema = new mongoose.Schema(
   }
 );
 
+// 🟢 Safe Code: Try/Catch lagaya taake Counter phatne par server freeze na ho
+productSchema.pre("save", async function (next) {
+  if (!this.isNew) return next();
 
-productSchema.pre("save", async function () {
-  if (!this.isNew) return;
+  try {
+    const counter = await Counter.findOneAndUpdate(
+      { name: "productId" },
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true }
+    );
 
-  const counter = await Counter.findOneAndUpdate(
-    { name: "productId" },
-    { $inc: { seq: 1 } },
-    { new: true, upsert: true }
-  );
-
-  this.productId = counter.seq;
+    this.productId = counter ? counter.seq : Math.floor(Math.random() * 10000);
+    next();
+  } catch (error) {
+    console.error("Error in Product Counter pre-save:", error.message);
+    next(error);
+  }
 });
 
 const Product = mongoose.model("Product", productSchema);
