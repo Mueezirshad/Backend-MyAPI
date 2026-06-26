@@ -11,7 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/api/payment", paymentRoutes);
+
 
 app.use(async (_req, _res, next) => {
   try {
@@ -29,6 +29,7 @@ app.get("/", (_req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/payment", paymentRoutes);
 
 app.use((err, _req, res, _next) => {
   if (err) {

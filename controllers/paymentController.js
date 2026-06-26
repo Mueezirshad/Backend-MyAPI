@@ -4,7 +4,6 @@ exports.createCheckoutSession = async (req, res) => {
   try {
     const { planName, price } = req.body; 
 
-    // Stripe Checkout Session create karna
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
@@ -15,17 +14,15 @@ exports.createCheckoutSession = async (req, res) => {
               name: `${planName} Membership Plan`,
               description: `Upgrade account to ${planName} package`,
             },
-            unit_amount: price * 100, // Stripe cents mein amount leta hai
+            unit_amount: price * 100, 
           },
           quantity: 1,
         },
       ],
       mode: "payment",
-      // Payment kamyab hone par Success Page par redirect hoga
-      success_url: `http://backend-my-api-ten.vercel.app/payment-success?session_id={CHECKOUT_SESSION_ID}&plan=${planName}`,
-      // Cancel karne par ya back karne par user wapas pricing page par chala jaye
-      cancel_url: `http://backend-my-api-ten.vercel.app/pricing`, 
-      // ⚡ Crash karne wali line yahan se hata di gayi hai!
+      // ⚡ Redirect hamesha Frontend (localhost:3000) par hoga, backend par nahi!
+      success_url: `http://localhost:3000/payment-success?session_id={CHECKOUT_SESSION_ID}&plan=${planName}`,
+      cancel_url: `http://localhost:3000/pricing`, 
     });
 
     res.status(200).json({ id: session.id, url: session.url });
