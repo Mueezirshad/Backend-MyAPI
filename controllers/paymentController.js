@@ -25,7 +25,7 @@ exports.createCheckoutSession = async (req, res) => {
       success_url: `http://backend-my-api-ten.vercel.app/payment-success?session_id={CHECKOUT_SESSION_ID}&plan=${planName}`,
       // Cancel karne par ya back karne par user wapas pricing page par chala jaye
       cancel_url: `http://backend-my-api-ten.vercel.app/pricing`, 
-      customer_email: req.user.email,
+      // ⚡ Crash karne wali line yahan se hata di gayi hai!
     });
 
     res.status(200).json({ id: session.id, url: session.url });
