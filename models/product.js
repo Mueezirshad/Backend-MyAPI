@@ -50,7 +50,6 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-// 🟢 Safe Code: Try/Catch lagaya taake Counter phatne par server freeze na ho
 productSchema.pre("save", async function (next) {
   if (!this.isNew) return next();
 

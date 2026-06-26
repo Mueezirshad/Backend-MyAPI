@@ -1,21 +1,21 @@
 // upload/cloudinary.js
 const cloudinary = require("cloudinary").v2;
 
-// 👑 Vercel/Environment variables se config connect ho rahi hai
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Buffer se direct Cloudinary par image upload karne ka professional tareeqa
+
 const uploadToCloudinary = (fileBuffer, folderName) => {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       { folder: folderName },
       (error, result) => {
         if (error) return reject(error);
-        resolve(result.secure_url); // Yeh live URL return karega
+        resolve(result.secure_url); 
       }
     );
     uploadStream.end(fileBuffer);
