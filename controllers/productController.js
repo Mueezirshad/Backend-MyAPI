@@ -51,7 +51,7 @@ exports.getAllProducts = async (req, res) => {
 
     console.log("🍃 Fetching Products from MongoDB Database... (First Time Hit)");
     // 🟢 Find query complete data nikalegi bina crash kiye
-    const products = await Product.find().populate("userId", "name email");
+    const products = await Product.find()
 
     productCache.set(cacheKey, products);
 
