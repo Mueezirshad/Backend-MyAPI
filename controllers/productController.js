@@ -1,11 +1,11 @@
 const Product = require("../models/product");
-const uploadToCloudinary = require("../config/cloudinary"); 
+const uploadToCloudinary = require("../config/cloudinary");
 const NodeCache = require("node-cache");
 const productCache = new NodeCache({ stdTTL: 300 });
 
 exports.createProduct = async (req, res) => {
   try {
-    const { title, description, price, category, phoneNumber , phone} = req.body;
+    const { title, description, price, category, phoneNumber, phone } = req.body;
 
     if (!req.file) {
       return res.status(400).json({ message: "Product image is required" });
@@ -13,19 +13,25 @@ exports.createProduct = async (req, res) => {
 
     const imageUrl = await uploadToCloudinary(req.file.buffer, "VanishMart_products");
 
+    const finalPhone = phoneNumber || phone || "0300000000";
+
     const newProduct = await Product.create({
       title,
       description,
       price: Number(price),
       category,
-      phoneNumber,
-      phone,
+      phoneNumber: finalPhone,
+      phone: finalPhone,
       thumbnail: imageUrl,
       userId: req.user?._id || req.user?.id || "660000000000000000000001",
     });
 
-    productCache.del("all_products"); 
-    console.log("🗑️ Cache cleared due to new product addition!");
+    if (productCache && typeof productCache.del === "function") {
+      productCache.del("all_products");
+      console.log("🗑️ Cache cleared due to new product addition!");
+
+    }
+
 
     res.status(201).json({
       message: "Product listed successfully! 🎉",
@@ -43,10 +49,10 @@ exports.getAllProducts = async (req, res) => {
 
     if (productCache.has(cacheKey)) {
       console.log("🚀 Fetching Products from Cache memory! (Fast Link)");
-      return res.status(200).json({ 
-        success: true, 
-        source: "cache", 
-        products: productCache.get(cacheKey) 
+      return res.status(200).json({
+        success: true,
+        source: "cache",
+        products: productCache.get(cacheKey)
       });
     }
 
@@ -56,10 +62,10 @@ exports.getAllProducts = async (req, res) => {
 
     productCache.set(cacheKey, products);
 
-    res.status(200).json({ 
-      success: true, 
-      source: "database", 
-      products 
+    res.status(200).json({
+      success: true,
+      source: "database",
+      products
     });
   } catch (error) {
     console.error("Get All Products Error:", error.message);
