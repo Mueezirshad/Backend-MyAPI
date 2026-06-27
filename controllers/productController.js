@@ -19,7 +19,7 @@ exports.createProduct = async (req, res) => {
       price,
       category,
       phoneNumber,
-      productImage: imageUrl,
+      thumbnail: imageUrl,
       userId: req.user?._id || req.user?.id || "660000000000000000000001",
     });
 

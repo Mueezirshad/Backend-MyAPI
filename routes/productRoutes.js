@@ -6,6 +6,6 @@ const protect = require("../middleware/auth");
 
 router.get("/", getAllProducts);
 
-router.post("/add", protect, upload.single("productImage"), createProduct);
+router.post("/add", protect, upload.single("thumbnail"), createProduct);
 
 module.exports = router;
