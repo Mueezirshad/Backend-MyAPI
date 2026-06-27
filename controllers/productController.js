@@ -20,7 +20,7 @@ exports.createProduct = async (req, res) => {
       category,
       phoneNumber,
       thumbnail: imageUrl,
-      userId: req.user?._id || req.user?.id || req.user?.userId, // Ensure userId is correctly referenced 
+      userId: req.user._id, 
     });
 
     productCache.del("all_products"); 

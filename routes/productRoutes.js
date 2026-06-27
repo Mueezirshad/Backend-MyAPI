@@ -6,7 +6,6 @@ const protect = require("../middleware/auth");
 
 router.get("/", getAllProducts);
 
-// ⚡ Multer ko pehle rakhein taake wo multipart data aur file ko sahi se process kar sake
-router.post("/add", upload.single("thumbnail"), protect, createProduct);
+router.post("/add", protect, upload.single("productImage"), createProduct);
 
 module.exports = router;
