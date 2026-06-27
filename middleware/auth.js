@@ -10,8 +10,11 @@ const protect = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET || "VanishMart_secret_key");
 
       req.user = await User.findById(decoded.id).select("-password");
-      next();
-    } catch (error) {
+      return next();
+
+    } 
+    catch (error) {
+      console.error("Token verification failed:", error.message);
       return res.status(401).json({ message: "Not authorized, token failed" });
     }
   }
