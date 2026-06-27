@@ -58,7 +58,7 @@ exports.getAllProducts = async (req, res) => {
 
     console.log("🍃 Fetching Products from MongoDB Database... (First Time Hit)");
     // 🟢 Find query complete data nikalegi bina crash kiye
-    const products = await Product.find()
+    const products = await Product.find().sort({ createdAt: -1 });
 
     productCache.set(cacheKey, products);
 
