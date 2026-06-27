@@ -16,7 +16,7 @@ exports.createProduct = async (req, res) => {
     const newProduct = await Product.create({
       title,
       description,
-      price,
+      price: Number(price),
       category,
       phoneNumber,
       thumbnail: imageUrl,
