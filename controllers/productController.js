@@ -5,7 +5,7 @@ const productCache = new NodeCache({ stdTTL: 300 });
 
 exports.createProduct = async (req, res) => {
   try {
-    const { title, description, price, category, phoneNumber } = req.body;
+    const { title, description, price, category, phoneNumber , phone} = req.body;
 
     if (!req.file) {
       return res.status(400).json({ message: "Product image is required" });
@@ -19,6 +19,7 @@ exports.createProduct = async (req, res) => {
       price: Number(price),
       category,
       phoneNumber,
+      phone,
       thumbnail: imageUrl,
       userId: req.user?._id || req.user?.id || "660000000000000000000001",
     });
