@@ -53,18 +53,26 @@ const productSchema = new mongoose.Schema(
 productSchema.pre("save", async function (next) {
   if (!this.isNew) return next();
 
+const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error("Counter timeout")), 2000)
+  );
+
   try {
-    const counter = await Counter.findOneAndUpdate(
+    const counter = await Promise.race([
+    Counter.findOneAndUpdate(
       { name: "productId" },
       { $inc: { seq: 1 } },
       { new: true, upsert: true }
-    );
+    ),
+    timeoutPromise
+    ]);
 
     this.productId = counter ? counter.seq : Math.floor(Math.random() * 10000);
-    next();
+    return next();
   } catch (error) {
-    console.error("Error in Product Counter pre-save:", error.message);
-    next(error);
+    console.error("⚠️ Counter phans gaya ya error aaya, fallback generated:", error.message);
+    this.productId = Math.floor(Math.random() * 10000);
+    return next(error);
   }
 });
 
