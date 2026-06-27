@@ -50,8 +50,8 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-productSchema.pre("save", async function (next) {
-  if (!this.isNew) return next();
+productSchema.pre("save", async function () {
+  if (!this.isNew) return;
 
 const timeoutPromise = new Promise((_, reject) =>
     setTimeout(() => reject(new Error("Counter timeout")), 2000)
@@ -62,17 +62,18 @@ const timeoutPromise = new Promise((_, reject) =>
     Counter.findOneAndUpdate(
       { name: "productId" },
       { $inc: { seq: 1 } },
+      { returnDocument: 'after', upsert: true },
       { new: true, upsert: true }
     ),
     timeoutPromise
     ]);
 
     this.productId = counter ? counter.seq : Math.floor(Math.random() * 10000);
-    return next();
+    
   } catch (error) {
     console.error("⚠️ Counter phans gaya ya error aaya, fallback generated:", error.message);
     this.productId = Math.floor(Math.random() * 10000);
-    return next(error);
+    return;
   }
 });
 
