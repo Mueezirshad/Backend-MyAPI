@@ -4,7 +4,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const paymentRoutes = require("./routes/paymentRoutes"); // Sahi path check kar lena file ka
-
+const  { createCheckoutSession } = require("./controllers/paymentController"); 
 
 const app = express();
 
@@ -23,10 +23,13 @@ app.use(async (_req, _res, next) => {
   }
 });
 
+
+
 app.get("/", (_req, res) => {
   res.send("VanishMart Live Backend — MongoDB & Cloudinary Integration Active!");
 });
 
+app.post("/create-checkout-session", createCheckoutSession); // Stripe checkout session route
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/payment", paymentRoutes);
