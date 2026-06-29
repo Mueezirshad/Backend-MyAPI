@@ -29,7 +29,7 @@ app.get("/", (_req, res) => {
   res.send("VanishMart Live Backend — MongoDB & Cloudinary Integration Active!");
 });
 
-app.post("/create-checkout-session", createCheckoutSession); // Stripe checkout session route
+app.post("/api/payment/create-checkout-session", createCheckoutSession); // Stripe checkout session route
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/payment", paymentRoutes);
