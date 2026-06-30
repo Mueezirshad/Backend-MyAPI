@@ -78,8 +78,8 @@ exports.createCheckoutSession = async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `http://localhost:3000/payment-success?session_id={CHECKOUT_SESSION_ID}&plan=${plan}`,
-      cancel_url: `http://localhost:3000/pricing`, 
+      success_url: `http://localhost:3000/success?session_id={CHECKOUT_SESSION_ID}&plan=${plan}`,
+      cancel_url: `http://localhost:3000/cancel`, 
     });
 
     return res.status(200).json({ id: session.id, url: session.url });
