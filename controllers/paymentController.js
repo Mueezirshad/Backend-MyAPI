@@ -47,7 +47,7 @@ exports.createCheckoutSession = async (req, res) => {
     }
 
     let price = 0;
-    const plan = planName.toLowerCase().trim(); // spaces saaf karne ke liye
+    const plan = planName.toLowerCase().trim(); 
 
     if (plan === "silver") {
       price = 10;
@@ -78,8 +78,8 @@ exports.createCheckoutSession = async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `http://localhost:3000/success?session_id={CHECKOUT_SESSION_ID}&plan=${plan}`,
-      cancel_url: `http://localhost:3000/cancel?plan=${plan}`, 
+      success_url: `https://e-commerce-project-git-main-mueezirshads-projects.vercel.app/success?session_id={CHECKOUT_SESSION_ID}&plan=${plan}`,
+      cancel_url: `https://e-commerce-project-git-main-mueezirshads-projects.vercel.app/cancel`, 
     });
 
     return res.status(200).json({ id: session.id, url: session.url });
@@ -88,7 +88,7 @@ exports.createCheckoutSession = async (req, res) => {
     console.error("🔴 Stripe Checkout Error:", error.message);
     return res.status(500).json({ 
       message: "Stripe Session Error", 
-      error: error.message // Yeh alert mein 'undefined00' phenk raha tha
+      error: error.message 
     });
   }
 }
