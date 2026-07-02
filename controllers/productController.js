@@ -1,5 +1,5 @@
 const Product = require("../models/product");
-const uploadToCloudinary = require("../config/cloudinary");
+const { uploadToCloudinary } = require("../config/cloudinary");
 const NodeCache = require("node-cache");
 const productCache = new NodeCache({ stdTTL: 300 });
 
@@ -57,7 +57,6 @@ exports.getAllProducts = async (req, res) => {
     }
 
     console.log("🍃 Fetching Products from MongoDB Database... (First Time Hit)");
-    // 🟢 Find query complete data nikalegi bina crash kiye
     const products = await Product.find().sort({ createdAt: -1 });
 
     productCache.set(cacheKey, products);
