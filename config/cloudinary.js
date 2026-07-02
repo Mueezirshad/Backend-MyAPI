@@ -10,7 +10,10 @@ cloudinary.config({
 const uploadToCloudinary = (fileBuffer, folderName) => {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
-      { folder: folderName },
+      { folder: folderName ,
+        format: 'webp',
+        transformation: [{ width: 500, height: 500, crop: 'limit' }]
+      },
       (error, result) => {
         if (error) return reject(error);
         resolve(result.secure_url); 
